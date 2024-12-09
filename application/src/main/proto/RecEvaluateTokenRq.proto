@@ -1,0 +1,56 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+package ec.com.dinersclub.dddmodules.domain.model.token.stubs;
+
+
+// Mensaje principal
+message RecEvaluateTokenRq {
+    PartyAuthenticationAssessment partyAuthenticationAssessment = 1;
+    string username = 2;
+    string transactionCode = 3;
+    Organisation organisation = 4;
+    TokenAssignment tokenAssignment = 5;
+}
+
+// Mensaje para la evaluación de autenticación de la parte
+message PartyAuthenticationAssessment {
+    PartyReference partyReference = 1;
+}
+
+// Mensaje para la referencia de la parte
+message PartyReference {
+    string referenceId = 1;
+    string partyType = 2;
+}
+
+// Mensaje para la organización
+message Organisation {
+    repeated OrganisationIdentification organisationIdentification = 1;
+}
+
+// Mensaje para la identificación de la organización
+message OrganisationIdentification {
+    Identifier identifier = 1;
+}
+
+// Mensaje para el identificador
+message Identifier {
+    string identifierValue = 1;
+}
+
+// Mensaje para la asignación de token
+message TokenAssignment {
+    string tokenStoredValue = 1;
+    TokenIdentificationCode tokenIdentificationCode = 2;
+}
+
+// Mensaje para el código de identificación del token
+message TokenIdentificationCode {
+    IdentifierValue identifierValue = 1;
+}
+
+// Mensaje para el valor del identificador
+message IdentifierValue {
+    string value = 1;
+}

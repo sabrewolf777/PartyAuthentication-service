@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+package ec.com.dinersclub.dddmodules.domain.model.token.stubs;
+
+
+// Mensaje principal
+message RecEvaluateTokenRs {
+    TokenAssignmentRs tokenAssignment = 1;
+    StatusInstanceRecord statusInstanceRecord = 2;
+}
+
+// Mensaje para TokenAssignment
+message TokenAssignmentRs {
+    RequestReference requestReference = 1;
+}
+
+// Mensaje para RequestReference
+message RequestReference {
+    string tokenRequestReason = 1;
+}
+
+// Mensaje para StatusInstanceRecord
+message StatusInstanceRecord {
+    string statusType = 1;
+    string transactionDate = 2;
+    string status = 3;
+    string statusCode = 4;
+    string providerCode = 5;
+    string message = 6;
+    string description = 7;
+}

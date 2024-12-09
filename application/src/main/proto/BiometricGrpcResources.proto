@@ -1,0 +1,54 @@
+syntax = "proto3";
+
+option java_package = "ec.com.dinersclub.dddmodules.application.grpc.biometric";
+option java_multiple_files = true;
+
+
+// Servicio gRPC
+service BiometricAssignmentService {
+    rpc AssignBiometric(InitiateBiometricAssignmentReq) returns (InitiateBiometricAssignmentRes);
+}
+
+message InitiateBiometricAssignmentReq {
+    CustomerReference customerReference = 1;
+    BiometricAssignment biometricAssignment = 2;
+    string transactionCode = 3;
+    string username = 4;
+}
+
+message CustomerReference {
+    PartyReference partyReference = 1;
+}
+
+message PartyReference {
+    string referenceId = 1;
+    repeated Identification identifications = 2;
+    string partyType = 3;
+}
+
+message Identification {
+    Identifier identifier = 1;
+    int32 personIdentificationType = 2;
+}
+
+message Identifier {
+    string identifierValue = 1;
+}
+
+message BiometricAssignment {
+    string biometricRegisteredDetail = 1;
+}
+
+message InitiateBiometricAssignmentRes {
+    StatusInstanceRecord statusInstanceRecord = 1;
+}
+
+message StatusInstanceRecord {
+    string statusType = 1;
+    string transactionDate = 2;
+    string status = 3;
+    string statusCode = 4;
+    string providerCode = 5;
+    string message = 6;
+    string description = 7;
+}

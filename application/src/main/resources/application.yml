@@ -1,0 +1,143 @@
+spring:
+  config:
+    activate:
+      on-profile: local
+  application:
+    name: password-management-service
+server:
+  port: 8081
+  servlet:
+    context-path: /experience/crossChannel/partyAuthentication
+    
+mvc:
+pathmatch:
+matching-strategy: ant_path_matcher
+  
+logging:
+  level:
+    root: INFO
+    com.ec: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always 
+
+msd.seg.otp.api.url: http://localhost:8082/seguridad/v2/otp/validar
+msd.seg.cli.verificacion.datos: http://localhost:8082/seguridad/v1/cliente/verificar-datos
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: dev
+  application:
+    name: password-management-service
+server:
+  port: 8081
+  servlet:
+    context-path: /experience/crossChannel/partyAuthentication
+    
+mvc:
+pathmatch:
+matching-strategy: ant_path_matcher
+  
+logging:
+  level:
+    root: INFO
+    com.ec: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always 
+
+msd.seg.otp.api.url: http://${MSD_SEG_OTP_API_URL}"/seguridad/v2/otp/validar
+msd.seg.cli.verificacion.datos: http://${MSD_SEG_CLI_VERIFY_DATA}/seguridad/v1/cliente/verificar-datos
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: qa
+  application:
+    name: password-management-service
+server:
+  port: 8081
+  servlet:
+    context-path: /experience/crossChannel/partyAuthentication
+    
+mvc:
+pathmatch:
+matching-strategy: ant_path_matcher
+  
+logging:
+  level:
+    root: INFO
+    com.ec: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always 
+
+msd.seg.otp.api.url: http://${MSD_SEG_OTP_API_URL}"/seguridad/v2/otp/validar
+msd.seg.cli.verificacion.datos: http://${MSD_SEG_CLI_VERIFY_DATA}/seguridad/v1/cliente/verificar-datos
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: prod
+  application:
+    name: password-management-service
+server:
+  port: 8081
+  servlet:
+    context-path: /experience/crossChannel/partyAuthentication
+    
+mvc:
+pathmatch:
+matching-strategy: ant_path_matcher
+  
+logging:
+  level:
+    root: INFO
+    com.ec: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always 
+
+msd.seg.otp.api.url: http://${MSD_SEG_OTP_API_URL}"/seguridad/v2/otp/validar
+msd.seg.cli.verificacion.datos: http://${MSD_SEG_CLI_VERIFY_DATA}/seguridad/v1/cliente/verificar-datos
+
+

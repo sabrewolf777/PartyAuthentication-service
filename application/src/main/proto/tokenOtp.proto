@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+package ec.com.dinersclub.dddmodules.domain.model.token.stubs;
+
+import "RecEvaluateTokenRq.proto";
+import "RecEvaluateTokenRs.proto";
+
+service TokenOtpService {
+    rpc validaTokenOtp (RecEvaluateTokenRq) returns (RecEvaluateTokenRs);
+}
