@@ -8,10 +8,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 
+import ec.com.dinersclub.dddmodules.domain.assessment.DinAssessmentRetrieveRq;
 import ec.com.dinersclub.dddmodules.domain.assessment.DinAssessmentRq;
+import ec.com.dinersclub.dddmodules.domain.assessment.DinBodyAssessmentRetrieveRq;
 import ec.com.dinersclub.dddmodules.domain.assessment.DinBodyAssessmentRq;
 import ec.com.dinersclub.dddmodules.domain.assessment.RecEvaluatePartyAuthenticationAssessmentRq;
 import ec.com.dinersclub.dddmodules.domain.assessment.RecEvaluatePartyAuthenticationAssessmentRs;
+import ec.com.dinersclub.dddmodules.domain.assessment.RecRetrievePartyAuthenticationAssessmentRq;
+import ec.com.dinersclub.dddmodules.domain.assessment.RecRetrievePartyAuthenticationAssessmentRs;
+import ec.com.dinersclub.dddmodules.domain.assessment.RecRetrievePartyAuthenticationAssessmentRs.PartyAuthenticationAssessment.PartyReference;
 import ec.com.dinersclub.dddmodules.domain.assessment.RecEvaluatePartyAuthenticationAssessmentRq.PartyReference.ContactPoint;
 import ec.com.dinersclub.dddmodules.domain.assessment.RecEvaluatePartyAuthenticationAssessmentRs.BiometricInstanceRecord;
 import ec.com.dinersclub.dddmodules.domain.assessment.RecEvaluatePartyAuthenticationAssessmentRs.Identification;
@@ -28,6 +33,83 @@ public class MapperRecEvaPartyAssToDinAssessment {
 	private static final Logger log = LoggerFactory.getLogger(MapperRecEvaPartyAssToDinAssessment.class);
 
 	private MapperRecEvaPartyAssToDinAssessment() {}
+	
+	
+	public static DinAssessmentRetrieveRq toDinAssessmentRetrieveRq(RecRetrievePartyAuthenticationAssessmentRq request, HttpHeaders headers) {
+		return DinAssessmentRetrieveRq.builder()
+									  .dinHeader(MapperDinHeader.mapperHeaderToDinnerHeader(headers))
+									  .dinBody(DinBodyAssessmentRetrieveRq.builder()
+											  								.codigoUnicoAplicativo(request.getSourceCode())
+											  								.numerdoIdentificacion(request.getPartyAuthenticationAssessment().getPartyReference()
+											  													   .getIdentifications().get(0).getIdentifier().getIdentifierValue())
+											  								.usuarioBiometrico(request.getUsername())
+											  								.tipoOperacion(request.getOperationType())
+											  								.origenInvocacion(request.getSourceRequest())
+											  								.build())
+									  .build();
+	}
+	
+	
+	
+	@SuppressWarnings("unchecked")
+	public static RecRetrievePartyAuthenticationAssessmentRs toRecAssessmentRetrieve(Object resp) {
+
+		final LinkedHashMap<String, Map<String,String>> map=(LinkedHashMap<String, Map<String,String>>) resp;
+		RecRetrievePartyAuthenticationAssessmentRs response = new RecRetrievePartyAuthenticationAssessmentRs();
+		
+		map.forEach((k,v) ->{
+			log.info("key: {}, value: {}",k,v);
+			if(k.equals("dinBody")) {
+				
+				List<ec.com.dinersclub.dddmodules.domain.assessment
+					 .RecRetrievePartyAuthenticationAssessmentRs.PartyAuthenticationAssessment
+					 .PartyReference.Identification> dentifications = new ArrayList<>();
+				
+				dentifications.add(ec.com.dinersclub.dddmodules.domain.assessment
+								   .RecRetrievePartyAuthenticationAssessmentRs.PartyAuthenticationAssessment
+								   .PartyReference.Identification.builder()
+								   .personIdentificationType(getInt(v.get("tipoIdentificacion")))
+								   .build());
+				
+				response.setPartyAuthenticationAssessment(ec.com.dinersclub.dddmodules.domain.assessment
+														  .RecRetrievePartyAuthenticationAssessmentRs.PartyAuthenticationAssessment
+														  .builder()
+														  .partyReference(PartyReference.builder()
+																  						.partyType(v.get("perfil"))
+																  						.identifications(dentifications)
+																  						.partyProfile(ec.com.dinersclub.dddmodules.domain.assessment.RecRetrievePartyAuthenticationAssessmentRs
+																  									  .PartyAuthenticationAssessment.PartyReference.PartyProfile.builder()
+																  									  												.investmentPaymentCard(getBoolean(v.get("inversionistaSinTarjetas")))
+																  									  												.build())
+																  						
+																  						.build())
+														  .authenticationLockType(v.get("codigoBloqueo"))
+														  .authenticationLockMinutes(getInt(v.get("minutosRestantes")))
+														  .authenticationLockHours(getInt(v.get("horasRestantes")))
+														  .authenticationLockSource(v.get("origenBloqueo"))
+														  .build());
+				
+				
+			}else if(k.equals("dinError")) {
+				response.setStatusInstanceRecord(ec.com.dinersclub.dddmodules.domain.assessment
+												.RecRetrievePartyAuthenticationAssessmentRs.StatusInstanceRecord.builder()
+					     .statusType(v.get("tipo"))
+					     .transactionDate(v.get("fecha"))
+					     .status(v.get("origen"))
+					     .statusCode(v.get("codigo"))
+					     .providerCode(v.get("codigoErrorProveedor"))
+					     .message(v.get("mensaje"))
+					     .description(v.get("detalle"))		
+				.build());
+			}
+		
+		});
+		
+		return response;
+	}
+	
+	
+	
 	
 	@SuppressWarnings("unchecked")
 	public static RecEvaluatePartyAuthenticationAssessmentRs toRecEvaPartyAut(Object resp) {
@@ -188,7 +270,8 @@ public class MapperRecEvaPartyAssToDinAssessment {
 		int res = 0;
 		log.info("Input: {}",input);
 		if(input != null) {
-			res=Integer.parseInt((String) input);
+			String s = input.toString();
+			res=Integer.parseInt(s);
 		}		
 		return res;
 	}

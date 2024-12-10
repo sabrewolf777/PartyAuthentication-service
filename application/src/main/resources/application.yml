@@ -32,6 +32,8 @@ management:
 msd.seg.otp.api.url: http://localhost:8082/seguridad/v2/otp/validar
 msd.seg.cli.verificacion.datos: http://localhost:8082/seguridad/v1/cliente/verificar-datos
 msd.seg.aut.notif.postlogin: http://localhost:8082/seguridad/v1/autenticacion/notificaciones/postlogin
+msd.seg.cli.perfil: http://localhost:8082/seguridad/v1/cliente/perfil/consultar
+
 ---
 
 spring:
@@ -68,6 +70,7 @@ management:
 msd.seg.otp.api.url: https://${MSD_SEG_OTP_API_URL}"/seguridad/v2/otp/validar
 msd.seg.cli.verificacion.datos: https://${MSD_SEG_CLI_API_URL}/seguridad/v1/cliente/verificar-datos
 msd.seg.aut.notif.postlogin: https://${MSD_SEG_AUT_API_URL}/seguridad/v1/autenticacion/notificaciones/postlogin
+msd.seg.cli.perfil: http://${MSD_SEG_CLI_PERFIL_API_URL}/seguridad/v1/cliente/perfil/consultar
 
 ---
 
@@ -105,6 +108,7 @@ management:
 msd.seg.otp.api.url: https://${MSD_SEG_OTP_API_URL}"/seguridad/v2/otp/validar
 msd.seg.cli.verificacion.datos: https://${MSD_SEG_CLI_API_URL}/seguridad/v1/cliente/verificar-datos
 msd.seg.aut.notif.postlogin: https://${MSD_SEG_AUT_API_URL}/seguridad/v1/autenticacion/notificaciones/postlogin
+msd.seg.cli.perfil: http://${MSD_SEG_CLI_PERFIL_API_URL}/seguridad/v1/cliente/perfil/consultar
 
 ---
 
@@ -142,5 +146,6 @@ management:
 msd.seg.otp.api.url: https://${MSD_SEG_OTP_API_URL}"/seguridad/v2/otp/validar
 msd.seg.cli.verificacion.datos: https://${MSD_SEG_CLI_API_URL}/seguridad/v1/cliente/verificar-datos
 msd.seg.aut.notif.postlogin: https://${MSD_SEG_AUT_API_URL}/seguridad/v1/autenticacion/notificaciones/postlogin
+msd.seg.cli.perfil: http://${MSD_SEG_CLI_PERFIL_API_URL}/seguridad/v1/cliente/perfil/consultar
 
 

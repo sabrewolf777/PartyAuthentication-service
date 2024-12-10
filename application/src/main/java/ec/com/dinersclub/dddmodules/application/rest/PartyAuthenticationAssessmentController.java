@@ -15,8 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ec.com.dinersclub.dddmodules.application.validate.ValidPartyAuthenticationAssessmentHeaders;
 import ec.com.dinersclub.dddmodules.application.validate.ValidPartyAuthenticationAssessmentRequest;
+import ec.com.dinersclub.dddmodules.application.validate.ValidPartyAuthenticationAssessmentRetrieveRequest;
 import ec.com.dinersclub.dddmodules.domain.assessment.RecEvaluatePartyAuthenticationAssessmentRq;
 import ec.com.dinersclub.dddmodules.domain.assessment.RecEvaluatePartyAuthenticationAssessmentRs;
+import ec.com.dinersclub.dddmodules.domain.assessment.RecRetrievePartyAuthenticationAssessmentRq;
+import ec.com.dinersclub.dddmodules.domain.assessment.RecRetrievePartyAuthenticationAssessmentRs;
 import ec.com.dinersclub.dddmodules.services.PartyAuthenticationAssessmentQueryUseCase;
 import jakarta.validation.Valid;
 
@@ -38,4 +41,14 @@ public class PartyAuthenticationAssessmentController {
 	        return new ResponseEntity<>( partyAuthenticationAssessmentQueryUseCase.verifyDataClient(request, headers),HttpStatus.OK);
 	    }
 
-}
+		
+		@PostMapping("/retrieve")
+	    public ResponseEntity<RecRetrievePartyAuthenticationAssessmentRs> verifyProfile(@Valid @ValidPartyAuthenticationAssessmentRetrieveRequest @RequestBody RecRetrievePartyAuthenticationAssessmentRq request,
+	    														         				@Valid @ValidPartyAuthenticationAssessmentHeaders @RequestHeader HttpHeaders headers) {
+	        log.info("Request verifyDataClient: {}, headers:{}",request,headers);
+	        
+	        return new ResponseEntity<>( partyAuthenticationAssessmentQueryUseCase.verifyProfile(request, headers),HttpStatus.OK);
+	    }
+
+		
+}	
